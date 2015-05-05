@@ -39,7 +39,7 @@ static void cursor_setmethod(t_cursor *x, t_symbol *s, int argc, t_atom *argv)
  
 static void cursor_bang(t_cursor *x)
 {
-    sys_vgui("pdsend \"%s motion [winfo pointerxy .]\"",
+    sys_vgui("pdsend \"%s motion [winfo pointerxy .]\";\n",
              x->receive_symbol->s_name);
 }
 
