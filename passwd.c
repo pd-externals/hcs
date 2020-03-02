@@ -115,7 +115,7 @@ static t_float get_uid_from_arguments(int argc, t_atom *argv)
 		uid = atom_getfloatarg(0,argc,argv);
 		if( uid < 0 )
 		{
-			error("[passwd]: UID less than zero not allowed (%d)", uid);
+			error("[passwd]: UID less than zero not allowed (%d)", (int)uid);
 			return(-1);
 		}
 	}

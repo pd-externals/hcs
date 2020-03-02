@@ -166,7 +166,7 @@ static t_float get_gid_from_arguments(int argc, t_atom *argv)
 		gid = atom_getfloatarg(0,argc,argv);
 		if( gid < 0 )
 		{
-			error("[group]: GID less than zero not allowed (%d)", gid);
+			error("[group]: GID less than zero not allowed (%d)", (int)gid);
 			return(-1);
 		}
 	}
