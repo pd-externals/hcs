@@ -124,7 +124,7 @@ static void stat_output_error(t_stat *x)
 		SETSYMBOL(output_atoms, gensym("access_denied"));
 		break;
 	case EIO:
-		error("[stat]: An error occured while reading %s", 
+		error("[stat]: An error occurred while reading %s",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("io_error"));
 		break;
