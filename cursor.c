@@ -126,6 +126,8 @@ void cursor_setup(void)
     cursor_class = class_new(gensym("cursor"),
         (t_newmethod)cursor_new, (t_method)cursor_free,
         sizeof(t_cursor), 0, 0);
+    if(!cursor_class)
+        return;
 
     class_addbang(cursor_class, (t_method)cursor_bang);
     class_addfloat(cursor_class, (t_method)cursor_float);

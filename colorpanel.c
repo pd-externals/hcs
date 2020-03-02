@@ -93,6 +93,8 @@ void colorpanel_setup(void)
     colorpanel_class = class_new(gensym("colorpanel"),
         (t_newmethod)colorpanel_new, (t_method)colorpanel_free,
         sizeof(t_colorpanel), 0, 0);
+    if (!colorpanel_class)
+        return;
     class_addbang(colorpanel_class, (t_method)colorpanel_bang);
     class_addsymbol(colorpanel_class, (t_method)colorpanel_symbol);
     class_addlist(colorpanel_class, (t_method)colorpanel_list);
