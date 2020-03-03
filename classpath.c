@@ -23,8 +23,8 @@
 /*                                                                           */
 /* --------------------------------------------------------------------------*/
 
-#include "m_pd.h"
-#include "s_stuff.h"
+#include <m_pd.h>
+#include <s_stuff.h>
 
 #include <string.h>
 

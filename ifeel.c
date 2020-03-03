@@ -27,7 +27,7 @@
  * count          - the total number of pulses to do
  */
 
-#include "m_pd.h"
+#include <m_pd.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/types.h>

@@ -2,9 +2,9 @@
  * This object allows you to see what is currently in the canvas-local path.
  */
 
-#include "m_pd.h"
-#include "s_stuff.h"
-#include "g_canvas.h"
+#include <m_pd.h>
+#include <s_stuff.h>
+#include <g_canvas.h>
 
 #include <stdio.h>
 #include <stdlib.h>

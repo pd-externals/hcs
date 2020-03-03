@@ -21,8 +21,8 @@
  * Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.        
  */
 
-#include "m_pd.h"
-#include "s_stuff.h"
+#include <m_pd.h>
+#include <s_stuff.h>
 
 #include <string.h>
 
