@@ -85,7 +85,7 @@ static void *window_name_new(t_symbol *s, int argc, t_atom *argv)
     else
         x->receive_name = tmp;
     
-	outlet_new(&x->x_obj, &s_symbol);
+    outlet_new(&x->x_obj, &s_symbol);
 
     return(x);
 }
