@@ -65,15 +65,15 @@ static void normalize_path(t_folder_list* x, char *normalized, const char *origi
 #ifdef _WIN32
     sys_unbashfilename(original, buf);
 #else
-    strncpy(buf, original, FILENAME_MAX);
+    strncpy(buf, original, FILENAME_MAX-1);
 #endif
     if(sys_isabsolutepath(buf)) {
         strncpy(normalized, buf, FILENAME_MAX);
         return;
     }
-    strncpy(normalized, cwd->s_name, FILENAME_MAX);
+    strncpy(normalized, cwd->s_name, FILENAME_MAX-1);
     if(normalized[(strlen(normalized)-1)] != '/') {
-        strncat(normalized, "/", 1);
+        strncat(normalized, "/", 2);
     }
     if(buf[0] == '.') {
         if(buf[1] == '/') {
@@ -235,8 +235,8 @@ static void *folder_list_new(t_symbol *s)
 	else
 	{
 		currentdir = canvas_getcurrentdir();
-		strncpy(buffer,currentdir->s_name,MAXPDSTRING);
-		strncat(buffer,"/*",MAXPDSTRING);
+		strncpy(buffer, currentdir->s_name, MAXPDSTRING-1);
+		strncat(buffer, "/*", MAXPDSTRING-1);
 		x->x_pattern = gensym(buffer);
 		logpost(x, 3, "setting pattern to default: %s",x->x_pattern->s_name);
 	}

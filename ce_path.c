@@ -52,7 +52,7 @@ static void ce_path_output(t_ce_path* x)
  * namespace, [ce_path] will output the new element on the next bang. */
     if(x->x_current)
     {
-        strncpy(buffer, x->x_current->nl_string, FILENAME_MAX);
+        strncpy(buffer, x->x_current->nl_string, FILENAME_MAX-1);
         outlet_symbol( x->x_data_outlet, gensym(buffer));
         x->x_current = x->x_current->nl_next;
     }
