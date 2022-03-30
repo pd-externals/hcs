@@ -41,7 +41,7 @@
 static char *version = "$Revision: 1.3 $";
 
 #define DEBUG(x)
-//#define DEBUG(x) x 
+//#define DEBUG(x) x
 
 /*------------------------------------------------------------------------------
  *  CLASS DEF
@@ -57,7 +57,7 @@ typedef struct _classpath {
 } t_classpath;
 
 /*------------------------------------------------------------------------------
- * IMPLEMENTATION                    
+ * IMPLEMENTATION
  */
 
 static void classpath_output(t_classpath* x)
@@ -72,16 +72,16 @@ static void classpath_output(t_classpath* x)
 		outlet_symbol( x->x_data_outlet, gensym(x->x_current->nl_string) );
 		x->x_current = x->x_current->nl_next;
 	}
-	else 
+	else
 		outlet_bang(x->x_status_outlet);
 }
 
 
-static void classpath_rewind(t_classpath* x) 
+static void classpath_rewind(t_classpath* x)
 {
 	DEBUG(post("classpath_output"););
 	char buffer[MAXPDSTRING];
-	
+
 	strncpy(buffer, sys_libdir->s_name, MAXPDSTRING - 6);
 	strcat(buffer, "/extra");
 	x->x_top = namelist_append(NULL, buffer, 0);
@@ -90,13 +90,13 @@ static void classpath_rewind(t_classpath* x)
 }
 
 
-static void classpath_add(t_classpath* x, t_symbol *s) 
+static void classpath_add(t_classpath* x, t_symbol *s)
 {
 	DEBUG(post("classpath_add"););
 }
 
 
-static void *classpath_new() 
+static void *classpath_new()
 {
 	DEBUG(post("classpath_new"););
 	t_classpath *x = (t_classpath *)pd_new(classpath_class);
@@ -115,28 +115,28 @@ void classpath_free()
 }
 
 
-void classpath_setup(void) 
+void classpath_setup(void)
 {
 	DEBUG(post("classpath_setup"););
-	classpath_class = class_new(gensym("classpath"), 
-								  (t_newmethod)classpath_new, 
+	classpath_class = class_new(gensym("classpath"),
+								  (t_newmethod)classpath_new,
 								  0,
-								  sizeof(t_classpath), 
-								  0, 
+								  sizeof(t_classpath),
+								  0,
 								  0);
 	/* add inlet datatype methods */
 	class_addbang(classpath_class,(t_method) classpath_output);
-	
+
 	/* add inlet message methods */
 	class_addmethod(classpath_class,(t_method) classpath_rewind,
 					gensym("rewind"), 0);
-	class_addmethod(classpath_class,(t_method) classpath_add,gensym("add"), 
+	class_addmethod(classpath_class,(t_method) classpath_add,gensym("add"),
 					A_DEFSYMBOL, 0);
 
-    logpost(NULL, 4, "[classpath] %s",version);  
+    logpost(NULL, 4, "[classpath] %s",version);
     logpost(NULL, 4, "\twritten by Hans-Christoph Steiner <hans@eds.org>");
     logpost(NULL, 4, "\tcompiled on "__DATE__" at "__TIME__ " ");
-    logpost(NULL, 4, "\tcompiled against Pd version %d.%d.%d", PD_MAJOR_VERSION, 
+    logpost(NULL, 4, "\tcompiled against Pd version %d.%d.%d", PD_MAJOR_VERSION,
             PD_MINOR_VERSION, PD_BUGFIX_VERSION);
 }
 

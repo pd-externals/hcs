@@ -52,6 +52,6 @@ void screensize_setup(void)
 
     class_addbang(screensize_class, (t_method)screensize_bang);
 
-    class_addmethod(screensize_class, (t_method)screensize_callback, 
+    class_addmethod(screensize_class, (t_method)screensize_callback,
                     gensym("screensize"), A_DEFFLOAT, A_DEFFLOAT, 0);
 }

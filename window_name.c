@@ -57,7 +57,7 @@ static void window_name_bang(t_window_name *x)
 }
 
 static void window_name_anything(t_window_name *x, t_symbol *s, int argc, t_atom *argv)
-{ 
+{
     t_symbol *first_symbol = atom_getsymbolarg(0,argc,argv);
     x->depth = 0;
     x->receive_name = &s_;
@@ -74,9 +74,9 @@ static void *window_name_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_window_name *x = (t_window_name *)pd_new(window_name_class);
 
-    t_glist* glist = (t_glist *)canvas_getcurrent(); 
+    t_glist* glist = (t_glist *)canvas_getcurrent();
     x->x_canvas = (t_canvas *)glist_getcanvas(glist);
- 
+
     t_symbol *tmp = atom_getsymbolarg(0,argc,argv);
     x->depth = 0;
     x->receive_name = &s_;
@@ -84,7 +84,7 @@ static void *window_name_new(t_symbol *s, int argc, t_atom *argv)
         x->depth = (t_int) atom_getfloatarg(0,argc,argv);
     else
         x->receive_name = tmp;
-    
+
     outlet_new(&x->x_obj, &s_symbol);
 
     return(x);

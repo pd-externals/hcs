@@ -34,7 +34,7 @@
 #endif
 
 #define DEBUG(x)
-//#define DEBUG(x) x 
+//#define DEBUG(x) x
 
 /*------------------------------------------------------------------------------
  *  CLASS DEF
@@ -49,7 +49,7 @@ typedef struct _setenv {
 } t_setenv;
 
 /*------------------------------------------------------------------------------
- * IMPLEMENTATION                    
+ * IMPLEMENTATION
  */
 
 static void setenv_output(t_setenv* x)
@@ -101,7 +101,7 @@ static void setenv_anything(t_setenv* x, t_symbol* s, int argc, t_atom* argv)
 }
 
 
-static void *setenv_new(t_symbol* s, t_float f) 
+static void *setenv_new(t_symbol* s, t_float f)
 {
 	DEBUG(post("setenv_new"););
 	t_setenv *x = (t_setenv *)pd_new(setenv_class);
@@ -116,16 +116,16 @@ static void *setenv_new(t_symbol* s, t_float f)
 }
 
 
-void setenv_setup(void) 
+void setenv_setup(void)
 {
 	DEBUG(post("setenv_setup"););
-	setenv_class = class_new(gensym("setenv"), 
-                             (t_newmethod)setenv_new, 
+	setenv_class = class_new(gensym("setenv"),
+                             (t_newmethod)setenv_new,
                              0,
-                             sizeof(t_setenv), 
+                             sizeof(t_setenv),
                              0,
-                             A_DEFSYMBOL, 
-                             A_DEFFLOAT, 
+                             A_DEFSYMBOL,
+                             A_DEFFLOAT,
                              0);
 	/* add inlet datatype methods */
 	class_addbang(setenv_class, (t_method)setenv_output);

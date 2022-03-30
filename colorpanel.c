@@ -34,7 +34,7 @@ static void colorpanel_list(t_colorpanel *x, t_symbol *s, int argc, t_atom *argv
     char color_string[MAXPDSTRING];
 
     strncpy(color_string,"#",MAXPDSTRING);
-    if(argc > 3) 
+    if(argc > 3)
         logpost(x, 2, "[colorpanel] warning more than three elements in list");
     for(i=0; i<3; i++)
     {
@@ -45,7 +45,7 @@ static void colorpanel_list(t_colorpanel *x, t_symbol *s, int argc, t_atom *argv
             snprintf(color_buffer, 3, "%02x", (tmp_int > 255 ? 255 : tmp_int));
             strncat(color_string, color_buffer, 3);
         }
-        else 
+        else
         {
             pd_error(x,"[colorpanel] symbols are not allowed in the color list");
             return;
@@ -59,7 +59,7 @@ static void colorpanel_callback(t_colorpanel *x, t_symbol *color)
 {
     t_atom output_atoms[3];
     unsigned int red, green, blue;
-    
+
     if(color != &s_)
     {
         strncpy(x->current_color, color->s_name, MAXPDSTRING);
@@ -98,7 +98,7 @@ void colorpanel_setup(void)
     class_addbang(colorpanel_class, (t_method)colorpanel_bang);
     class_addsymbol(colorpanel_class, (t_method)colorpanel_symbol);
     class_addlist(colorpanel_class, (t_method)colorpanel_list);
-    class_addmethod(colorpanel_class, (t_method)colorpanel_callback, 
+    class_addmethod(colorpanel_class, (t_method)colorpanel_callback,
                     gensym("callback"), A_DEFSYMBOL, 0);
 
     sys_vgui("eval [read [open {%s/%s.tcl}]]\n",

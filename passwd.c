@@ -42,7 +42,7 @@
 static char *version = "$Revision: 1.3 $";
 
 #define DEBUG(x)
-//#define DEBUG(x) x 
+//#define DEBUG(x) x
 
 /*------------------------------------------------------------------------------
  *  CLASS DEF
@@ -51,13 +51,13 @@ static t_class *passwd_class;
 
 typedef struct _passwd {
 	t_object            x_obj;
-	t_float             x_uid;  
+	t_float             x_uid;
 	t_outlet            *x_data_outlet;
 	t_outlet            *x_status_outlet;
 } t_passwd;
 
 /*------------------------------------------------------------------------------
- * IMPLEMENTATION                    
+ * IMPLEMENTATION
  */
 
 static void passwd_output(t_passwd *x)
@@ -85,7 +85,7 @@ static void passwd_output(t_passwd *x)
 			SETSYMBOL(output_data + 3, gensym(passwd_pointer->pw_gecos));
 			SETSYMBOL(output_data + 4, gensym(passwd_pointer->pw_dir));
 			SETSYMBOL(output_data + 5, gensym(passwd_pointer->pw_shell));
-			outlet_anything(x->x_data_outlet, gensym(passwd_pointer->pw_name), 
+			outlet_anything(x->x_data_outlet, gensym(passwd_pointer->pw_name),
 							6, output_data);
 		}
 		else
@@ -106,11 +106,11 @@ static t_float get_uid_from_arguments(int argc, t_atom *argv)
 	if(argc == 0) return(0);
 
 	if(argc != 1)
-		post("[passwd]: too many arguments (%d), ignoring all but the first", 
+		post("[passwd]: too many arguments (%d), ignoring all but the first",
 			 argc);
 
 	first_argument = atom_getsymbolarg(0,argc,argv);
-	if(first_argument == &s_) 
+	if(first_argument == &s_)
 	{ // single float arg means UID #
 		uid = atom_getfloatarg(0,argc,argv);
 		if( uid < 0 )
@@ -134,18 +134,18 @@ static t_float get_uid_from_arguments(int argc, t_atom *argv)
 static void passwd_set(t_passwd *x, t_symbol *s, int argc, t_atom *argv)
 {
     /* get rid of the unused variable warning with the if() statement */
-	if( strcmp(s->s_name, "set") == 0 ) 
+	if( strcmp(s->s_name, "set") == 0 )
 		x->x_uid = get_uid_from_arguments(argc, argv);
 }
 
 
-static void passwd_float(t_passwd *x, t_float f) 
+static void passwd_float(t_passwd *x, t_float f)
 {
 	x->x_uid = f;
 	passwd_output(x);
 }
 
-static void passwd_symbol(t_passwd *x, t_symbol *s) 
+static void passwd_symbol(t_passwd *x, t_symbol *s)
 {
 	t_atom argv[1];
 	SETSYMBOL(argv, s);
@@ -154,7 +154,7 @@ static void passwd_symbol(t_passwd *x, t_symbol *s)
 }
 
 
-static void *passwd_new(t_symbol *s, int argc, t_atom *argv) 
+static void *passwd_new(t_symbol *s, int argc, t_atom *argv)
 {
 	DEBUG(post("passwd_new"););
 
@@ -170,24 +170,24 @@ static void *passwd_new(t_symbol *s, int argc, t_atom *argv)
 }
 
 
-void passwd_free(void) 
+void passwd_free(void)
 {
 #ifdef _WIN32
 #else
 	endpwent();
-#endif /* _WIN32 */	
+#endif /* _WIN32 */
 }
 
 
-void passwd_setup(void) 
+void passwd_setup(void)
 {
 	DEBUG(post("passwd_setup"););
-	passwd_class = class_new(gensym("passwd"), 
-								  (t_newmethod)passwd_new, 
+	passwd_class = class_new(gensym("passwd"),
+								  (t_newmethod)passwd_new,
 								  0,
-								  sizeof(t_passwd), 
-								  0, 
-								  A_GIMME, 
+								  sizeof(t_passwd),
+								  0,
+								  A_GIMME,
 								  0);
 	/* add inlet datatype methods */
 	class_addbang(passwd_class, (t_method) passwd_output);
@@ -196,11 +196,11 @@ void passwd_setup(void)
 	/* add inlet message methods */
 	class_addmethod(passwd_class,
 					(t_method) passwd_set,
-					gensym("set"), 
-					A_GIMME, 
+					gensym("set"),
+					A_GIMME,
 					0);
 
-    logpost(NULL, 4, "[passwd] %s",version);  
+    logpost(NULL, 4, "[passwd] %s",version);
     logpost(NULL, 4, "\twritten by Hans-Christoph Steiner <hans@eds.org>");
     logpost(NULL, 4, "\tcompiled on "__DATE__" at "__TIME__ " ");
 }

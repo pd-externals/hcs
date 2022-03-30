@@ -41,7 +41,7 @@
 static char *version = "$Revision: 1.5 $";
 
 #define DEBUG(x)
-//#define DEBUG(x) x 
+//#define DEBUG(x) x
 
 /*------------------------------------------------------------------------------
  *  CLASS DEF
@@ -57,7 +57,7 @@ typedef struct _stat {
 	t_symbol            *x_filename;
 /* output */
 	t_atom              *output; // holder for a list of atoms to be outputted
-	t_int               output_count;  // number of atoms in in x->output 
+	t_int               output_count;  // number of atoms in in x->output
 	t_outlet            *x_data_outlet;
 	t_outlet            *x_status_outlet;
 } t_stat;
@@ -85,12 +85,12 @@ static void add_atom_to_output(t_stat *x, t_atom *new_atom)
 static void add_symbol_to_output(t_stat *x, t_symbol *s)
 {
 	t_atom *temp_atom = getbytes(sizeof(t_atom));
-	SETSYMBOL(temp_atom, s); 
+	SETSYMBOL(temp_atom, s);
 	add_atom_to_output(x,temp_atom);
 	freebytes(temp_atom,sizeof(t_atom));
 }
 */
-		
+
 static void add_float_to_output(t_stat *x, t_float f)
 {
 	t_atom *temp_atom = getbytes(sizeof(t_atom));
@@ -110,7 +110,7 @@ static void reset_output(t_stat *x)
 }
 
 /*------------------------------------------------------------------------------
- * IMPLEMENTATION                    
+ * IMPLEMENTATION
  */
 
 static void stat_output_error(t_stat *x)
@@ -130,13 +130,13 @@ static void stat_output_error(t_stat *x)
 		break;
 #ifndef _WIN32
 	case ELOOP:
-		error("[stat]: A loop exists in symbolic links in %s", 
+		error("[stat]: A loop exists in symbolic links in %s",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("symlink_loop"));
 		break;
 #endif
 	case ENAMETOOLONG:
-		error("[stat]: The filename %s is too long", 
+		error("[stat]: The filename %s is too long",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("name_too_long"));
 		break;
@@ -145,13 +145,13 @@ static void stat_output_error(t_stat *x)
 		SETSYMBOL(output_atoms, gensym("does_not_exist"));
 		break;
 	case ENOTDIR:
-		error("[stat]: A component of %s is not a existing folder", 
+		error("[stat]: A component of %s is not a existing folder",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("not_folder"));
 		break;
 #ifndef _WIN32
 	case EOVERFLOW:
-		error("[stat]: %s caused overflow in stat struct", 
+		error("[stat]: %s caused overflow in stat struct",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("internal_overflow"));
 		break;
@@ -161,7 +161,7 @@ static void stat_output_error(t_stat *x)
 		SETSYMBOL(output_atoms, gensym("internal_fault"));
 		break;
 	case EINVAL:
-		error("[stat]: invalid argument to stat() (%s)", 
+		error("[stat]: invalid argument to stat() (%s)",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("invalid"));
 		break;
@@ -217,17 +217,17 @@ static void stat_output(t_stat* x)
 		add_float_to_output(x, (t_float) (stat_buffer.st_ctime / 86400));
 		add_float_to_output(x, (t_float) (stat_buffer.st_ctime % 86400));
 #else
-		add_float_to_output(x, 
+		add_float_to_output(x,
 				 (t_float) (stat_buffer.st_atimespec.tv_sec / 86400));
-		add_float_to_output(x, 
+		add_float_to_output(x,
 				 (t_float) (stat_buffer.st_atimespec.tv_sec % 86400));
-		add_float_to_output(x, 
+		add_float_to_output(x,
 				 (t_float) (stat_buffer.st_mtimespec.tv_sec / 86400));
-		add_float_to_output(x, 
+		add_float_to_output(x,
 				 (t_float) (stat_buffer.st_mtimespec.tv_sec % 86400));
-		add_float_to_output(x, 
+		add_float_to_output(x,
 				 (t_float) (stat_buffer.st_ctimespec.tv_sec / 86400));
-		add_float_to_output(x, 
+		add_float_to_output(x,
 				 (t_float) (stat_buffer.st_ctimespec.tv_sec % 86400));
 #endif /* _POSIX_C_SOURCE */
 		outlet_anything(x->x_data_outlet,x->x_filename,
@@ -236,7 +236,7 @@ static void stat_output(t_stat* x)
 }
 
 
-static void stat_set(t_stat* x, t_symbol *s) 
+static void stat_set(t_stat* x, t_symbol *s)
 {
 	DEBUG(post("stat_set"););
 #ifdef _WIN32
@@ -245,18 +245,18 @@ static void stat_set(t_stat* x, t_symbol *s)
 	x->x_filename = gensym(string_buffer);
 #else
 	x->x_filename = s;
-#endif	
+#endif
 }
 
 
-static void stat_symbol(t_stat *x, t_symbol *s) 
+static void stat_symbol(t_stat *x, t_symbol *s)
 {
    stat_set(x,s);
    stat_output(x);
 }
 
 
-static void *stat_new(t_symbol *s) 
+static void *stat_new(t_symbol *s)
 {
 	DEBUG(post("stat_new"););
 
@@ -280,24 +280,24 @@ static void *stat_new(t_symbol *s)
 	return (x);
 }
 
-void stat_setup(void) 
+void stat_setup(void)
 {
 	DEBUG(post("stat_setup"););
-	stat_class = class_new(gensym("stat"), 
-								  (t_newmethod)stat_new, 
+	stat_class = class_new(gensym("stat"),
+								  (t_newmethod)stat_new,
 								  0,
-								  sizeof(t_stat), 
-								  0, 
-								  A_DEFSYM, 
+								  sizeof(t_stat),
+								  0,
+								  A_DEFSYM,
 								  0);
 	/* add inlet datatype methods */
 	class_addbang(stat_class,(t_method) stat_output);
 	class_addsymbol(stat_class,(t_method) stat_symbol);
-	
+
 	/* add inlet message methods */
-	class_addmethod(stat_class,(t_method) stat_set,gensym("set"), 
+	class_addmethod(stat_class,(t_method) stat_set,gensym("set"),
 					A_DEFSYM, 0);
-    logpost(NULL, 4, "[stat] %s",version);  
+    logpost(NULL, 4, "[stat] %s",version);
     logpost(NULL, 4, "\twritten by Hans-Christoph Steiner <hans@eds.org>");
     logpost(NULL, 4, "\tcompiled on "__DATE__" at "__TIME__ " ");
 }

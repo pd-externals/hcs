@@ -40,7 +40,7 @@
 static char *version = "1.4";
 
 #define DEBUG(x)
-//#define DEBUG(x) x 
+//#define DEBUG(x) x
 
 /*------------------------------------------------------------------------------
  *  CLASS DEF
@@ -52,7 +52,7 @@ typedef struct _uname {
 } t_uname;
 
 /*------------------------------------------------------------------------------
- * IMPLEMENTATION                    
+ * IMPLEMENTATION
  */
 
 static void uname_output(t_uname* x)
@@ -61,11 +61,11 @@ static void uname_output(t_uname* x)
 
 #ifdef _WIN32
 // TODO fake uname for Windows
-//    http://msdn.microsoft.com/en-us/library/ms724429(VS.85).aspx 
+//    http://msdn.microsoft.com/en-us/library/ms724429(VS.85).aspx
 #else
 	struct utsname utsname_struct;
 	t_atom uname_data[5];
-	
+
 	if ( uname(&utsname_struct) > -1 )
 	{
 		SETSYMBOL(uname_data, gensym(utsname_struct.sysname));
@@ -73,7 +73,7 @@ static void uname_output(t_uname* x)
 		SETSYMBOL(uname_data + 2, gensym(utsname_struct.release));
 		SETSYMBOL(uname_data + 3, gensym(utsname_struct.version));
 		SETSYMBOL(uname_data + 4, gensym(utsname_struct.machine));
-	
+
 		outlet_anything(x->x_obj.ob_outlet,
 						atom_gensym(uname_data),
 						4,
@@ -83,29 +83,29 @@ static void uname_output(t_uname* x)
 }
 
 
-static void *uname_new(t_symbol *s) 
+static void *uname_new(t_symbol *s)
 {
 	DEBUG(post("uname_new"););
 
 	t_uname *x = (t_uname *)pd_new(uname_class);
 
 	outlet_new(&x->x_obj, &s_symbol);
-	
+
 	return (x);
 }
 
-void uname_setup(void) 
+void uname_setup(void)
 {
 	DEBUG(post("uname_setup"););
-	uname_class = class_new(gensym("uname"), 
-								  (t_newmethod)uname_new, 
+	uname_class = class_new(gensym("uname"),
+								  (t_newmethod)uname_new,
 								  0,
-								  sizeof(t_uname), 
-								  0, 
+								  sizeof(t_uname),
+								  0,
 								  0);
 	/* add inlet datatype methods */
 	class_addbang(uname_class,(t_method) uname_output);
-	
+
 }
 
 

@@ -43,7 +43,7 @@
 static char *version = "$Revision: 1.3 $";
 
 #define DEBUG(x)
-//#define DEBUG(x) x 
+//#define DEBUG(x) x
 
 /*------------------------------------------------------------------------------
  *  CLASS DEF
@@ -52,10 +52,10 @@ static t_class *group_class;
 
 typedef struct _group {
 	t_object            x_obj;
-	t_float             x_gid;  
+	t_float             x_gid;
 /* output */
 	t_atom              *output; // holder for a list of atoms to be outputted
-	t_int               output_count;  // number of atoms in in x->output 
+	t_int               output_count;  // number of atoms in in x->output
 	t_outlet            *x_data_outlet;
 	t_outlet            *x_status_outlet;
 } t_group;
@@ -80,11 +80,11 @@ static void add_atom_to_output(t_group *x, t_atom *new_atom)
 static void add_symbol_to_output(t_group *x, t_symbol *s)
 {
 	t_atom *temp_atom = getbytes(sizeof(t_atom));
-	SETSYMBOL(temp_atom, s); 
+	SETSYMBOL(temp_atom, s);
 	add_atom_to_output(x,temp_atom);
 	freebytes(temp_atom,sizeof(t_atom));
 }
-		
+
 static void add_float_to_output(t_group *x, t_float f)
 {
 	t_atom *temp_atom = getbytes(sizeof(t_atom));
@@ -104,7 +104,7 @@ static void reset_output(t_group *x)
 }
 
 /*------------------------------------------------------------------------------
- * IMPLEMENTATION                    
+ * IMPLEMENTATION
  */
 
 static void group_output(t_group *x)
@@ -136,7 +136,7 @@ static void group_output(t_group *x)
 				add_symbol_to_output(x, gensym( *(members) ));
 				members++;
 			}
-			outlet_anything(x->x_data_outlet, gensym(group_pointer->gr_name), 
+			outlet_anything(x->x_data_outlet, gensym(group_pointer->gr_name),
 							x->output_count, x->output);
 		}
 		else
@@ -157,11 +157,11 @@ static t_float get_gid_from_arguments(int argc, t_atom *argv)
 	if(argc == 0) return(0);
 
 	if(argc != 1)
-		post("[group]: too many arguments (%d), ignoring all but the first", 
+		post("[group]: too many arguments (%d), ignoring all but the first",
 			 argc);
 
 	first_argument = atom_getsymbolarg(0,argc,argv);
-	if(first_argument == &s_) 
+	if(first_argument == &s_)
 	{ // single float arg means GID #
 		gid = atom_getfloatarg(0,argc,argv);
 		if( gid < 0 )
@@ -185,18 +185,18 @@ static t_float get_gid_from_arguments(int argc, t_atom *argv)
 static void group_set(t_group *x, t_symbol *s, int argc, t_atom *argv)
 {
     /* get rid of the unused variable warning with the if() statement */
-	if( strcmp(s->s_name, "set") == 0 ) 
+	if( strcmp(s->s_name, "set") == 0 )
 		x->x_gid = get_gid_from_arguments(argc, argv);
 }
 
 
-static void group_float(t_group *x, t_float f) 
+static void group_float(t_group *x, t_float f)
 {
 	x->x_gid = f;
 	group_output(x);
 }
 
-static void group_symbol(t_group *x, t_symbol *s) 
+static void group_symbol(t_group *x, t_symbol *s)
 {
 	t_atom argv[1];
 	SETSYMBOL(argv, s);
@@ -205,7 +205,7 @@ static void group_symbol(t_group *x, t_symbol *s)
 }
 
 
-static void *group_new(t_symbol *s, int argc, t_atom *argv) 
+static void *group_new(t_symbol *s, int argc, t_atom *argv)
 {
 	DEBUG(post("group_new"););
 
@@ -222,24 +222,24 @@ static void *group_new(t_symbol *s, int argc, t_atom *argv)
 }
 
 
-void group_free(void) 
+void group_free(void)
 {
 #ifdef _WIN32
 #else
 	endgrent();
-#endif /* _WIN32 */	
+#endif /* _WIN32 */
 }
 
 
-void group_setup(void) 
+void group_setup(void)
 {
 	DEBUG(post("group_setup"););
-	group_class = class_new(gensym("group"), 
-								  (t_newmethod)group_new, 
+	group_class = class_new(gensym("group"),
+								  (t_newmethod)group_new,
 								  0,
-								  sizeof(t_group), 
-								  0, 
-								  A_GIMME, 
+								  sizeof(t_group),
+								  0,
+								  A_GIMME,
 								  0);
 	/* add inlet datatype methods */
 	class_addbang(group_class, (t_method) group_output);
@@ -248,10 +248,10 @@ void group_setup(void)
 	/* add inlet message methods */
 	class_addmethod(group_class,
 					(t_method) group_set,
-					gensym("set"), 
-					A_GIMME, 
+					gensym("set"),
+					A_GIMME,
 					0);
-    logpost(NULL, 4, "[group] %s",version);  
+    logpost(NULL, 4, "[group] %s",version);
     logpost(NULL, 4, "\twritten by Hans-Christoph Steiner <hans@eds.org>");
     logpost(NULL, 4, "\tcompiled on "__DATE__" at "__TIME__ " ");
 }

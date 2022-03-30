@@ -35,7 +35,7 @@
 #include <string.h>
 
 #define DEBUG(x)
-//#define DEBUG(x) x 
+//#define DEBUG(x) x
 
 #define PLACEHOLDER  '?'
 
@@ -46,19 +46,19 @@ static t_class *sql_query_class;
 
 static t_class *proxy_inlet_class;
 
-typedef struct _proxy_inlet 
+typedef struct _proxy_inlet
 {
   t_pd pd;
   void *owner;
   unsigned int id;
 } t_proxy_inlet;
 
-typedef struct _sql_query 
+typedef struct _sql_query
 {
     t_object            x_obj;
 
     t_binbuf*           x_query_binbuf;   // binbuf for converting args to string
-    
+
     t_proxy_inlet*      inlets;           // pointer to array of _proxy_inlets
     t_atom*             atoms;            // pointer to array of atoms
     unsigned int        placeholder_count;// number of items in above arrays
@@ -66,19 +66,19 @@ typedef struct _sql_query
     t_outlet*           x_data_outlet;    // for list of data to plug into query
     t_outlet*           x_query_outlet;   // for SQL query
 } t_sql_query;
-    
+
 
 /*------------------------------------------------------------------------------
  * FUNCTION PROTOTYPES
  */
-static void sql_query_set_atom(t_sql_query *x, int atom_num, t_symbol *s, 
+static void sql_query_set_atom(t_sql_query *x, int atom_num, t_symbol *s,
                                int argc, t_atom *a);
 
 /*------------------------------------------------------------------------------
  * PROXY INLET FUNCTIONS
  */
 
-static void proxy_inlet_new(t_proxy_inlet *p, t_object *owner, unsigned int id) 
+static void proxy_inlet_new(t_proxy_inlet *p, t_object *owner, unsigned int id)
 {
 	DEBUG(post("proxy_inlet_new"););
 	p->pd = proxy_inlet_class;
@@ -93,7 +93,7 @@ static void proxy_inlet_anything(t_proxy_inlet *p, t_symbol *s, int argc, t_atom
     sql_query_set_atom(p->owner, p->id, s, argc, argv);
 }
 
-static void proxy_inlet_setup(void) 
+static void proxy_inlet_setup(void)
 {
 	post("proxy_inlet_setup");
 	proxy_inlet_class = (t_class *)class_new(gensym("#__PROXY_INLET__"),
@@ -110,7 +110,7 @@ static void proxy_inlet_setup(void)
  * STANDARD CLASS FUNCTIONS
  */
 
-static void sql_query_set_atom(t_sql_query *x, int atom_num, t_symbol *s, 
+static void sql_query_set_atom(t_sql_query *x, int atom_num, t_symbol *s,
                                int argc, t_atom *a)
 {
     DEBUG(post("sql_query_set_atom"););
@@ -129,18 +129,18 @@ static void sql_query_output(t_sql_query *x)
     outlet_list(x->x_data_outlet, &s_list, x->placeholder_count, x->atoms);
 }
 
-static void sql_query_anything(t_sql_query *x, t_symbol *s, int argc, t_atom *argv) 
+static void sql_query_anything(t_sql_query *x, t_symbol *s, int argc, t_atom *argv)
 {
     sql_query_set_atom(x, 0, s, argc, argv);
     sql_query_output(x);
 }
 
-static void sql_query_free(t_sql_query *x) 
+static void sql_query_free(t_sql_query *x)
 {
     binbuf_free(x->x_query_binbuf);
 }
-    
-static void *sql_query_new(t_symbol *s, int argc, t_atom *argv) 
+
+static void *sql_query_new(t_symbol *s, int argc, t_atom *argv)
 {
 	DEBUG(post("sql_query_new"););
     unsigned int i;
@@ -161,11 +161,11 @@ static void *sql_query_new(t_symbol *s, int argc, t_atom *argv)
         x->placeholder_count++;
         current = strchr(current + 1, PLACEHOLDER);
     }
-    
+
     x->inlets = getbytes(x->placeholder_count * sizeof(t_proxy_inlet));
     for(i = 1; i < x->placeholder_count; ++i)
         proxy_inlet_new(&x->inlets[i], (t_object *)x, i);
-    
+
     x->atoms = getbytes(x->placeholder_count * sizeof(t_atom));
     for(i = 0; i < x->placeholder_count; ++i)
         SETSYMBOL(&x->atoms[i], &s_);
@@ -176,14 +176,14 @@ static void *sql_query_new(t_symbol *s, int argc, t_atom *argv)
 	return (x);
 }
 
-void sql_query_setup(void) 
+void sql_query_setup(void)
 {
-	sql_query_class = class_new(gensym("sql_query"), 
-                                (t_newmethod)sql_query_new, 
-                                (t_method)sql_query_free, 
-                                sizeof(t_sql_query), 
-                                0, 
-                                A_GIMME, 
+	sql_query_class = class_new(gensym("sql_query"),
+                                (t_newmethod)sql_query_new,
+                                (t_method)sql_query_free,
+                                sizeof(t_sql_query),
+                                0,
+                                A_GIMME,
                                 0);
 
 	/* add inlet datatype methods */

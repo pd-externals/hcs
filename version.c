@@ -30,7 +30,7 @@
 static char *version = "1.3";
 
 #define DEBUG(x)
-//#define DEBUG(x) x 
+//#define DEBUG(x) x
 
 /*------------------------------------------------------------------------------
  *  CLASS DEF
@@ -42,7 +42,7 @@ typedef struct _version {
 } t_version;
 
 /*------------------------------------------------------------------------------
- * IMPLEMENTATION                    
+ * IMPLEMENTATION
  */
 
 static void version_output(t_version* x)
@@ -57,30 +57,30 @@ static void version_output(t_version* x)
 	SETSYMBOL(version_data + 3, gensym(PD_TEST_VERSION));
 	SETSYMBOL(version_data + 4, gensym(__DATE__));
 	SETSYMBOL(version_data + 5, gensym(__TIME__));
-	
+
 	outlet_list(x->x_obj.ob_outlet, &s_list, 6, version_data);
 }
 
 
-static void *version_new(t_symbol *s) 
+static void *version_new(t_symbol *s)
 {
 	DEBUG(post("version_new"););
 
 	t_version *x = (t_version *)pd_new(version_class);
 
 	outlet_new(&x->x_obj, &s_list);
-	
+
 	return (x);
 }
 
-void version_setup(void) 
+void version_setup(void)
 {
 	DEBUG(post("version_setup"););
-	version_class = class_new(gensym("version"), 
-								  (t_newmethod)version_new, 
+	version_class = class_new(gensym("version"),
+								  (t_newmethod)version_new,
 								  0,
-								  sizeof(t_version), 
-								  0, 
+								  sizeof(t_version),
+								  0,
 								  0);
 	/* add inlet datatype methods */
 	class_addbang(version_class,(t_method) version_output);

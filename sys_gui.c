@@ -87,6 +87,6 @@ void sys_gui_setup(void)
     class_addanything(sys_gui_class, (t_method)sys_gui_anything);
     class_addbang(sys_gui_class, (t_method)sys_gui_bang);
     class_addlist(sys_gui_class, (t_method)sys_gui_list);
-    class_addmethod(sys_gui_class, (t_method)sys_gui_finished, 
+    class_addmethod(sys_gui_class, (t_method)sys_gui_finished,
                     gensym("finished"), 0);
 }

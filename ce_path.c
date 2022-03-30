@@ -26,7 +26,7 @@ struct _canvasenvironment
 static char *version = "$Revision: 1.2 $";
 
 #define DEBUG(x)
-//#define DEBUG(x) x 
+//#define DEBUG(x) x
 
 /*------------------------------------------------------------------------------
  *  CLASS DEF
@@ -56,12 +56,12 @@ static void ce_path_output(t_ce_path* x)
         outlet_symbol( x->x_data_outlet, gensym(buffer));
         x->x_current = x->x_current->nl_next;
     }
-    else 
+    else
         outlet_bang(x->x_status_outlet);
 }
 
 
-static void ce_path_rewind(t_ce_path* x) 
+static void ce_path_rewind(t_ce_path* x)
 {
     t_canvasenvironment *e = canvas_getenv(x->x_canvas);
     x->x_current = e->ce_path;
@@ -73,7 +73,7 @@ static void *ce_path_new(t_floatarg f)
     t_ce_path *x = (t_ce_path *)pd_new(ce_path_class);
     t_glist *glist = (t_glist *)canvas_getcurrent();
     t_canvas *canvas = (t_canvas *)glist_getcanvas(glist);
-    
+
     int depth = (int)f;
     if(depth < 0) depth = 0;
     while(depth && canvas) {
@@ -93,19 +93,19 @@ void ce_path_setup(void)
 {
     ce_path_class = class_new(gensym("ce_path"), (t_newmethod)ce_path_new,
                              NULL,
-                             sizeof(t_ce_path), 
-                             CLASS_DEFAULT, 
-                             A_DEFFLOAT, 
+                             sizeof(t_ce_path),
+                             CLASS_DEFAULT,
+                             A_DEFFLOAT,
                              0);
     /* add inlet atom methods */
     class_addbang(ce_path_class, (t_method) ce_path_output);
-    
+
     /* add inlet selector methods */
     class_addmethod(ce_path_class, (t_method) ce_path_rewind,
                     gensym("rewind"), 0);
 
-    logpost(NULL, 4, "[ce_path] %s", version);  
+    logpost(NULL, 4, "[ce_path] %s", version);
     logpost(NULL, 4, "\tcompiled on "__DATE__" at "__TIME__ " ");
-    logpost(NULL, 4, "\tcompiled against Pd version %d.%d.%d", PD_MAJOR_VERSION, 
+    logpost(NULL, 4, "\tcompiled against Pd version %d.%d.%d", PD_MAJOR_VERSION,
             PD_MINOR_VERSION, PD_BUGFIX_VERSION);
 }

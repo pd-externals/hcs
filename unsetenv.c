@@ -34,7 +34,7 @@
 #endif
 
 #define DEBUG(x)
-//#define DEBUG(x) x 
+//#define DEBUG(x) x
 
 /*------------------------------------------------------------------------------
  *  CLASS DEF
@@ -48,7 +48,7 @@ typedef struct _unsetenv {
 } t_unsetenv;
 
 /*------------------------------------------------------------------------------
- * IMPLEMENTATION                    
+ * IMPLEMENTATION
  */
 
 static void unsetenv_bang(t_unsetenv* x)
@@ -78,7 +78,7 @@ static void unsetenv_symbol(t_unsetenv* x, t_symbol *s)
 }
 
 
-static void *unsetenv_new(t_symbol* s) 
+static void *unsetenv_new(t_symbol* s)
 {
     DEBUG(post("unsetenv_new"););
     t_unsetenv *x = (t_unsetenv *)pd_new(unsetenv_class);
@@ -91,15 +91,15 @@ static void *unsetenv_new(t_symbol* s)
 }
 
 
-void unsetenv_setup(void) 
+void unsetenv_setup(void)
 {
     DEBUG(post("unsetenv_setup"););
-    unsetenv_class = class_new(gensym("unsetenv"), 
-                             (t_newmethod)unsetenv_new, 
+    unsetenv_class = class_new(gensym("unsetenv"),
+                             (t_newmethod)unsetenv_new,
                              0,
-                             sizeof(t_unsetenv), 
+                             sizeof(t_unsetenv),
                              0,
-                             A_DEFSYMBOL, 
+                             A_DEFSYMBOL,
                              0);
     /* add inlet datatype methods */
     class_addbang(unsetenv_class, (t_method)unsetenv_bang);

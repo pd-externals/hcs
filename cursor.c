@@ -36,7 +36,7 @@ static void cursor_setmethod(t_cursor *x, t_symbol *s, int argc, t_atom *argv)
     sys_vgui("set ::cursor_%s \"%s\"\n", s->s_name, atom_getsymbol(argv)->s_name);
     canvas_setcursor(x->parent_canvas, 0); /* hack to refresh the cursor */
 }
- 
+
 static void cursor_bang(t_cursor *x)
 {
     sys_vgui("pdsend \"%s motion [winfo pointerxy .]\";\n",
@@ -71,7 +71,7 @@ static void cursor_float(t_cursor *x, t_float f)
 static void cursor_button_callback(t_cursor *x, t_float button, t_float state)
 {
     t_atom output_atoms[2];
-    
+
     SETFLOAT(output_atoms, button);
     SETFLOAT(output_atoms + 1, state);
     outlet_anything(x->data_outlet, button_symbol, 2, output_atoms);
@@ -80,7 +80,7 @@ static void cursor_button_callback(t_cursor *x, t_float button, t_float state)
 static void cursor_motion_callback(t_cursor *x, t_float x_position, t_float y_position)
 {
     t_atom output_atoms[2];
-    
+
     SETSYMBOL(output_atoms, x_symbol);
     SETFLOAT(output_atoms + 1, x_position);
     outlet_anything(x->data_outlet, motion_symbol, 2, output_atoms);
@@ -88,11 +88,11 @@ static void cursor_motion_callback(t_cursor *x, t_float x_position, t_float y_po
     SETFLOAT(output_atoms + 1, y_position);
     outlet_anything(x->data_outlet, motion_symbol, 2, output_atoms);
 }
- 
+
 static void cursor_mousewheel_callback(t_cursor *x, t_float f)
 {
     t_atom output_atom;
-    
+
     SETFLOAT(&output_atom, f);
     outlet_anything(x->data_outlet, mousewheel_symbol, 1, &output_atom);
 }
@@ -140,27 +140,27 @@ void cursor_setup(void)
     //status_symbol = gensym("status");
     cursor_receive_symbol = gensym("#hcs_cursor_class_receive");
 
-    class_addmethod(cursor_class, (t_method)cursor_button_callback, 
+    class_addmethod(cursor_class, (t_method)cursor_button_callback,
                     button_symbol, A_DEFFLOAT, A_DEFFLOAT, 0);
-    class_addmethod(cursor_class, (t_method)cursor_motion_callback, 
+    class_addmethod(cursor_class, (t_method)cursor_motion_callback,
                     motion_symbol, A_DEFFLOAT, A_DEFFLOAT, 0);
-    class_addmethod(cursor_class, (t_method)cursor_mousewheel_callback, 
+    class_addmethod(cursor_class, (t_method)cursor_mousewheel_callback,
                     mousewheel_symbol, A_DEFFLOAT, 0);
 
     /* methods for setting the cursor icon */
-    class_addmethod(cursor_class, (t_method)cursor_setmethod, 
+    class_addmethod(cursor_class, (t_method)cursor_setmethod,
                     gensym("runmode_nothing"), A_GIMME, 0);
-    class_addmethod(cursor_class, (t_method)cursor_setmethod, 
+    class_addmethod(cursor_class, (t_method)cursor_setmethod,
                     gensym("runmode_clickme"), A_GIMME, 0);
-    class_addmethod(cursor_class, (t_method)cursor_setmethod, 
+    class_addmethod(cursor_class, (t_method)cursor_setmethod,
                     gensym("runmode_thicken"), A_GIMME, 0);
-    class_addmethod(cursor_class, (t_method)cursor_setmethod, 
+    class_addmethod(cursor_class, (t_method)cursor_setmethod,
                     gensym("runmode_addpoint"), A_GIMME, 0);
-    class_addmethod(cursor_class, (t_method)cursor_setmethod, 
+    class_addmethod(cursor_class, (t_method)cursor_setmethod,
                     gensym("editmode_nothing"), A_GIMME, 0);
-    class_addmethod(cursor_class, (t_method)cursor_setmethod, 
+    class_addmethod(cursor_class, (t_method)cursor_setmethod,
                     gensym("editmode_connect"), A_GIMME, 0);
-    class_addmethod(cursor_class, (t_method)cursor_setmethod, 
+    class_addmethod(cursor_class, (t_method)cursor_setmethod,
                     gensym("editmode_disconnect"), A_GIMME, 0);
 
     sys_vgui("eval [read [open {%s/%s.tcl}]]\n",
