@@ -1,7 +1,7 @@
 /* --------------------------------------------------------------------------*/
 /*                                                                           */
 /* This object outputs the global search path for finding objects using a    */
-/* similar interface as [textfile] and [qlist].                               */
+/* similar interface as [textfile] and [qlist].                              */
 /*                                                                           */
 /* Copyright (c) 2006 Hans-Christoph Steiner                                 */
 /*                                                                           */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation; either version 3            */
 /* of the License, or (at your option) any later version.                    */
 /*                                                                           */
-/* See file LICENSE for further information on licensing terms.             */
+/* See file LICENSE for further information on licensing terms.              */
 /*                                                                           */
 /* This program is distributed in the hope that it will be useful,           */
 /* but WITHOUT ANY WARRANTY; without even the implied warranty of            */
