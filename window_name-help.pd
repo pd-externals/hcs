@@ -171,7 +171,7 @@ depth;
 #X symbolatom 270 376 10 0 0 0 - - -;
 #X obj 270 308 hradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144
 -1 -1 6;
-#X text 131 399 .x0.c means a non-existant window;
+#X text 131 399 .x0.c means a non-existent window;
 #X floatatom 281 330 5 0 0 0 - - -;
 #X msg 149 305 2;
 #X obj 104 333 window_name;
@@ -213,7 +213,7 @@ canvas_name:;
 #X msg 99 341 myname;
 #X msg 84 315 symbol this_does_not_exist;
 #X msg 149 341 symbol pd-getmyname;
-#X text 111 439 .x0 means a non-existant window;
+#X text 111 439 .x0 means a non-existent window;
 #X obj 72 155 window_name pd-getmyname;
 #N canvas 0 22 450 300 getmyname 0;
 #X symbolatom 188 150 0 0 0 0 - - -;

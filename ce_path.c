@@ -12,7 +12,7 @@
 
 /* WARNING: KLUDGE!  */
 /*
- * this struct is not publically defined (its in g_canvas.c) so I need to
+ * this struct is not publicly defined (its in g_canvas.c) so I need to
  * include this here.  Its from Pd 0.41-test03 2006-11-19. */
 struct _canvasenvironment
 {

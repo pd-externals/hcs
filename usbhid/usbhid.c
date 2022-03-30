@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation; either version 3            */
 /* of the License, or (at your option) any later version.                    */
 /*                                                                           */
-/* See file LICENSE for further informations on licensing terms.             */
+/* See file LICENSE for further information on licensing terms.             */
 /*                                                                           */
 /* This program is distributed in the hope that it will be useful,           */
 /* but WITHOUT ANY WARRANTY; without even the implied warranty of            */
@@ -68,7 +68,7 @@ struct usb_dev_handle {
  */
 
 /* count the number of instances of this object so that certain free()
- * functions can be called only after the final instance is detroyed. */
+ * functions can be called only after the final instance is destroyed. */
 t_int usbhid_instance_count;
 
 #define HID_ID_MAX 32
