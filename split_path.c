@@ -36,7 +36,7 @@ void split_path_symbol(t_split_path *x, t_symbol *s)
 	if (length < MAXPATHLEN)
 		outlet_symbol(x->x_filename_outlet,gensym(s->s_name + length + 1));
 	else
-		error("[split_path] filename name too long. The limit is %d characters",MAXPATHLEN);
+		pd_error(x, "[split_path] filename name too long. The limit is %d characters",MAXPATHLEN);
 	while (length > 0)
 	{
 		length--;
@@ -49,7 +49,7 @@ void split_path_symbol(t_split_path *x, t_symbol *s)
 	}
 	else
 	{
-		error("[split_path] path name too long. The limit is %d characters",MAXPATHLEN);
+		pd_error(x, "[split_path] path name too long. The limit is %d characters",MAXPATHLEN);
 	}
 }
 

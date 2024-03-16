@@ -97,7 +97,7 @@ static void passwd_output(t_passwd *x)
 }
 
 
-static t_float get_uid_from_arguments(int argc, t_atom *argv)
+static t_float get_uid_from_arguments(t_passwd *x, int argc, t_atom *argv)
 {
 	t_symbol *first_argument;
 	t_float uid = -1;
@@ -106,7 +106,7 @@ static t_float get_uid_from_arguments(int argc, t_atom *argv)
 	if(argc == 0) return(0);
 
 	if(argc != 1)
-		post("[passwd]: too many arguments (%d), ignoring all but the first",
+		pd_error(x, "[passwd]: too many arguments (%d), ignoring all but the first",
 			 argc);
 
 	first_argument = atom_getsymbolarg(0,argc,argv);
@@ -115,7 +115,7 @@ static t_float get_uid_from_arguments(int argc, t_atom *argv)
 		uid = atom_getfloatarg(0,argc,argv);
 		if( uid < 0 )
 		{
-			error("[passwd]: UID less than zero not allowed (%d)", (int)uid);
+			pd_error(x, "[passwd]: UID less than zero not allowed (%d)", (int)uid);
 			return(-1);
 		}
 	}
@@ -135,7 +135,7 @@ static void passwd_set(t_passwd *x, t_symbol *s, int argc, t_atom *argv)
 {
     /* get rid of the unused variable warning with the if() statement */
 	if( strcmp(s->s_name, "set") == 0 )
-		x->x_uid = get_uid_from_arguments(argc, argv);
+		x->x_uid = get_uid_from_arguments(x, argc, argv);
 }
 
 

@@ -148,7 +148,7 @@ static void group_output(t_group *x)
 }
 
 
-static t_float get_gid_from_arguments(int argc, t_atom *argv)
+static t_float get_gid_from_arguments(t_group *x, int argc, t_atom *argv)
 {
 	t_symbol *first_argument;
 	t_float gid = -1;
@@ -157,7 +157,7 @@ static t_float get_gid_from_arguments(int argc, t_atom *argv)
 	if(argc == 0) return(0);
 
 	if(argc != 1)
-		post("[group]: too many arguments (%d), ignoring all but the first",
+		pd_error(x, "[group]: too many arguments (%d), ignoring all but the first",
 			 argc);
 
 	first_argument = atom_getsymbolarg(0,argc,argv);
@@ -166,7 +166,7 @@ static t_float get_gid_from_arguments(int argc, t_atom *argv)
 		gid = atom_getfloatarg(0,argc,argv);
 		if( gid < 0 )
 		{
-			error("[group]: GID less than zero not allowed (%d)", (int)gid);
+			pd_error(x, "[group]: GID less than zero not allowed (%d)", (int)gid);
 			return(-1);
 		}
 	}
@@ -186,7 +186,7 @@ static void group_set(t_group *x, t_symbol *s, int argc, t_atom *argv)
 {
     /* get rid of the unused variable warning with the if() statement */
 	if( strcmp(s->s_name, "set") == 0 )
-		x->x_gid = get_gid_from_arguments(argc, argv);
+		x->x_gid = get_gid_from_arguments(x, argc, argv);
 }
 
 

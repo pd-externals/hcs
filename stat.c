@@ -120,53 +120,53 @@ static void stat_output_error(t_stat *x)
 	switch(errno)
 	{
 	case EACCES:
-		error("[stat]: access denied: %s", x->x_filename->s_name);
+		pd_error(x, "[stat]: access denied: %s", x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("access_denied"));
 		break;
 	case EIO:
-		error("[stat]: An error occurred while reading %s",
+		pd_error(x, "[stat]: An error occurred while reading %s",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("io_error"));
 		break;
 #ifndef _WIN32
 	case ELOOP:
-		error("[stat]: A loop exists in symbolic links in %s",
+		pd_error(x, "[stat]: A loop exists in symbolic links in %s",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("symlink_loop"));
 		break;
 #endif
 	case ENAMETOOLONG:
-		error("[stat]: The filename %s is too long",
+		pd_error(x, "[stat]: The filename %s is too long",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("name_too_long"));
 		break;
 	case ENOENT:
-		error("[stat]: %s does not exist", x->x_filename->s_name);
+		pd_error(x, "[stat]: %s does not exist", x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("does_not_exist"));
 		break;
 	case ENOTDIR:
-		error("[stat]: A component of %s is not a existing folder",
+		pd_error(x, "[stat]: A component of %s is not a existing folder",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("not_folder"));
 		break;
 #ifndef _WIN32
 	case EOVERFLOW:
-		error("[stat]: %s caused overflow in stat struct",
+		pd_error(x, "[stat]: %s caused overflow in stat struct",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("internal_overflow"));
 		break;
 #endif
 	case EFAULT:
-		error("[stat]: fault in stat struct (%s)", x->x_filename->s_name);
+		pd_error(x, "[stat]: fault in stat struct (%s)", x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("internal_fault"));
 		break;
 	case EINVAL:
-		error("[stat]: invalid argument to stat() (%s)",
+		pd_error(x, "[stat]: invalid argument to stat() (%s)",
 			  x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("invalid"));
 		break;
 	default:
-		error("[stat]: unknown error %d: %s", errno, x->x_filename->s_name);
+		pd_error(x, "[stat]: unknown error %d: %s", errno, x->x_filename->s_name);
 		SETSYMBOL(output_atoms, gensym("unknown"));
 	}
 	SETSYMBOL(output_atoms + 1, x->x_filename);

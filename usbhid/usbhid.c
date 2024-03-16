@@ -175,7 +175,7 @@ static t_int init_libhid(t_usbhid *x)
 		x->x_hid_return = hid_init();
 		if(x->x_hid_return != HID_RET_SUCCESS)
 		{
-			error("[usbhid] hid_init failed with return code %d\n",
+			pd_error(x, "[usbhid] hid_init failed with return code %d\n",
 				  x->x_hid_return);
 		}
 	}
@@ -410,7 +410,7 @@ static void usbhid_close(t_usbhid *x)
 		}
 		else
 		{
-			error("[usbhid] could not close %d, error #%d",x->x_device_number,x->x_hid_return);
+			pd_error(x, "[usbhid] could not close %d, error #%d",x->x_device_number,x->x_hid_return);
 		}
 	}
 }
@@ -460,7 +460,7 @@ static void usbhid_open(t_usbhid *x, t_symbol *vendor_id_hex, t_symbol *product_
 		}
 		else
 		{
-			error("[usbhid] hid_force_open failed with return code %d\n",
+			pd_error(x, "[usbhid] hid_force_open failed with return code %d\n",
 				  x->x_hid_return);
 		}
 	}
@@ -477,7 +477,7 @@ static void usbhid_get(t_usbhid *x, t_float length_arg)
 
  	if ( !hid_is_opened(x->x_hidinterface) )
 	{
-		error("[usbhid] device not open, can't get data");
+		pd_error(x, "[usbhid] device not open, can't get data");
 		return;
 	}
 	x->x_hid_return = hid_get_input_report(x->x_hidinterface,
@@ -487,7 +487,7 @@ static void usbhid_get(t_usbhid *x, t_float length_arg)
 										   length_arg);
 	if (x->x_hid_return != HID_RET_SUCCESS)
 	{
-		error("[usbhid] hid_get_input_report failed with return code %d\n",
+		pd_error(x, "[usbhid] hid_get_input_report failed with return code %d\n",
 			  x->x_hid_return);
 		reset_output(x);
 		add_float_to_output(x, x->x_hid_return);
@@ -532,7 +532,7 @@ static void usbhid_set(t_usbhid *x,  t_symbol *s, int argc, t_atom *argv)
 
  	if ( !hid_is_opened(x->x_hidinterface) )
 	{
-		error("[usbhid] device not open, can't set data");
+		pd_error(x, "[usbhid] device not open, can't set data");
 		return;
 	}
     packet = make_hid_packet(argc, argv);
@@ -544,7 +544,7 @@ static void usbhid_set(t_usbhid *x,  t_symbol *s, int argc, t_atom *argv)
 
 	if (x->x_hid_return != HID_RET_SUCCESS)
 	{
-		error("[usbhid] hid_get_input_report failed with return code %d\n",
+		pd_error(x, "[usbhid] hid_get_input_report failed with return code %d\n",
 			  x->x_hid_return);
 		reset_output(x);
 		add_float_to_output(x, x->x_hid_return);
@@ -579,7 +579,7 @@ static void usbhid_write(t_usbhid *x,  t_symbol *s, int argc, t_atom *argv)
 
  	if ( !hid_is_opened(x->x_hidinterface) )
 	{
-		error("[usbhid] device not open, can't set data");
+		pd_error(x, "[usbhid] device not open, can't set data");
 		return;
 	}
 /*
@@ -606,7 +606,7 @@ static void usbhid_write(t_usbhid *x,  t_symbol *s, int argc, t_atom *argv)
 											SEND_PACKET_LEN);
 	if (x->x_hid_return != HID_RET_SUCCESS)
 	{
-		error("[usbhid] hid_set_output_report failed with return code %d",
+		pd_error(x, "[usbhid] hid_set_output_report failed with return code %d",
 			  x->x_hid_return);
 		reset_output(x);
 		add_float_to_output(x, x->x_hid_return);
@@ -623,7 +623,7 @@ static void usbhid_refresh(t_usbhid *x)
 {
 	x->x_hid_return = hid_cleanup();
 	if (x->x_hid_return != HID_RET_SUCCESS)
-		error("[usbhid] hid_cleanup failed with return code %d\n",
+		pd_error(x, "[usbhid] hid_cleanup failed with return code %d\n",
 			  x->x_hid_return);
 	if( init_libhid(x) != HID_RET_SUCCESS ) return;
 }
@@ -653,7 +653,7 @@ static void usbhid_get_descriptor(t_usbhid *x)
     char buf[MAXPDSTRING];
 
 	if (!hid_is_opened(x->x_hidinterface)) {
-		error("[usbget] cannot dump tree of unopened HIDinterface.");
+		pd_error(x, "[usbget] cannot dump tree of unopened HIDinterface.");
 	}
 	else
 	{
@@ -796,7 +796,7 @@ static void usbhid_free(t_usbhid* x)
 		post("[usbhid] freeing last instance");
 		x->x_hid_return = hid_cleanup();
 		if (x->x_hid_return != HID_RET_SUCCESS)
-			error("[usbhid] hid_cleanup failed with return code %d\n",
+			pd_error(x, "[usbhid] hid_cleanup failed with return code %d\n",
 				  x->x_hid_return);
 	}
 
@@ -845,7 +845,7 @@ static void *usbhid_new(t_float f)
  * anyway, so that the inlets and outlets are created, thus not breaking the
  * patch.   */
 /* 	if (usbhid_open(x,f)) */
-/* 		error("[usbhid] device %d did not open",(t_int)f); */
+/* 		pd_error(x, "[usbhid] device %d did not open",(t_int)f); */
 
 	usbhid_instance_count++;
 
